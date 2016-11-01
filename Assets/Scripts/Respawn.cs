@@ -22,8 +22,8 @@ public class Respawn : MonoBehaviour {
 
 	void Spawn(){
 		int spawnPointIndex = Random.Range(0,spawnPoints.Length);
-		int posicaoAleatoriaX = Random.Range(-1500,1500);
-		int posicaoAleatoriaY = Random.Range(-1500,1500);
+		int posicaoAleatoriaX = Random.Range(-100,100);
+		int posicaoAleatoriaY = Random.Range(-100,100);
 		this.transform.position = new Vector3(posicaoAleatoriaX, posicaoAleatoriaY, 0);
 		if(maxSpawn>=count){
 			//spawnPoints [spawnPointIndex].position.x = posicaoAleatoriaX;

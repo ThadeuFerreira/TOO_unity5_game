@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
 	public int spdEnergy;
 	public bool CoolDown;
 
+
 	public GameObject pontuacao;
 	public GameObject PLight;
 
@@ -20,23 +21,24 @@ public class PlayerController : MonoBehaviour {
 	private int count;
 	private int score;
 
-	public float speed;
+	public float acceleration;
+    public float speed;
 	private float movex;
 	private float movey;
 
 	private Color oriColor;
 
 	private SpriteRenderer sprRen;
-	private Rigidbody2D rg2d;
+	private Rigidbody Rb;
 
 	private Sprite waterSpr;
 
 	// Use this for initialization
 	void Start () {
-		sprRen = GetComponent<SpriteRenderer> ();
-		rg2d = GetComponent<Rigidbody2D> ();
+		
+		Rb= GetComponent<Rigidbody> ();
 
-		oriColor = sprRen.color;
+
 
 		count = 0;
 		CoolDown = false;
@@ -52,26 +54,20 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		// Movement Control
-		if (Input.GetKey (KeyCode.W))
-			rg2d.velocity = (transform.up * speed);
-		else if (Input.GetKey (KeyCode.S))
-			rg2d.velocity = (-transform.up * speed);
-        if (Input.GetKey(KeyCode.A))
-            rg2d.velocity = (-transform.right * speed);
-        else if (Input.GetKey(KeyCode.D))
-            rg2d.velocity = (transform.right * speed);
 
+
+        float moveH = Input.GetAxis("Horizontal");
+        float moveV = Input.GetAxis("Vertical");
+
+        Rb.AddForce(new Vector3(moveH, moveV, 0)*acceleration);
         // Glow
         if (Input.GetKey ("p") && Energy > 0 && CoolDown == false) {
-			sprRen.color = Color.white;
-			sprRen.sortingOrder = 100;
+
 			PLight.GetComponent<Light> ().enabled = true;
 			Energy = Energy - spdEnergy;
 
 		} else {
-			sprRen.color = oriColor;
-			sprRen.sortingOrder = 0;
+
 			PLight.GetComponent<Light> ().enabled = false;
 				
 			if (Energy < MaxEnergy)
@@ -89,7 +85,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		rg2d.angularVelocity = 0;
+		//Rb.angularVelocity.x = 0;
 
 		energyBar.currentAmount = Energy;
 
