@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour {
         float moveH = Input.GetAxis("Horizontal");
         float moveV = Input.GetAxis("Vertical");
 
-        Rb.AddForce(new Vector3(moveH, -moveV, 0)*acceleration);
+        Rb.AddForce(new Vector3(moveH, moveV, 0)*acceleration);
        
         player_speed2D = Rb.velocity;
         // Glow
