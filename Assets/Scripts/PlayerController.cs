@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 	private int score;
 
 	public float acceleration;
-    public float speed;
+    public Vector2 player_speed2D;
 	private float movex;
 	private float movey;
 
@@ -59,7 +59,9 @@ public class PlayerController : MonoBehaviour {
         float moveH = Input.GetAxis("Horizontal");
         float moveV = Input.GetAxis("Vertical");
 
-        Rb.AddForce(new Vector3(moveH, moveV, 0)*acceleration);
+        Rb.AddForce(new Vector3(moveH, -moveV, 0)*acceleration);
+       
+        player_speed2D = (new Vector2(moveH, moveV) * acceleration) - player_speed2D;
         // Glow
         if (Input.GetKey ("p") && Energy > 0 && CoolDown == false) {
 
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		//Rb.angularVelocity.x = 0;
+
 
 		energyBar.currentAmount = Energy;
 
@@ -102,7 +104,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		
+
+        float moveH = Input.GetAxis("Horizontal");
+        float moveV = Input.GetAxis("Vertical");
+
+        BackgroudScroller.current.Go(moveH, moveV);
 	}
 
 	void SetCountText () {
