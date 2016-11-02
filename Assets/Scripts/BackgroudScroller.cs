@@ -17,8 +17,9 @@ public class BackgroudScroller : MonoBehaviour {
 	}
 
     //Movimenta o background em relação ao jogador
-    public void Go(float x, float y) {
-        pos += new Vector2(x,y)*speed;
+    public void Go(Vector2 pSpeed) {
+        pos.x += pSpeed.x*speed;
+        pos.y += -pSpeed.y * speed;
         if (pos.magnitude > 1.0f)
         {
             pos -= new Vector2(1.0f, 1.0f);

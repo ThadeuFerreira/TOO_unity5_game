@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 
         Rb.AddForce(new Vector3(moveH, -moveV, 0)*acceleration);
        
-        player_speed2D = (new Vector2(moveH, moveV) * acceleration) - player_speed2D;
+        player_speed2D = Rb.velocity;
         // Glow
         if (Input.GetKey ("p") && Energy > 0 && CoolDown == false) {
 
@@ -105,10 +105,9 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate () {
 
-        float moveH = Input.GetAxis("Horizontal");
-        float moveV = Input.GetAxis("Vertical");
 
-        BackgroudScroller.current.Go(moveH, moveV);
+
+        BackgroudScroller.current.Go( player_speed2D);
 	}
 
 	void SetCountText () {
