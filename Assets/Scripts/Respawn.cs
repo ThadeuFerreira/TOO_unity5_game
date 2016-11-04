@@ -1,18 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class Respawn : MonoBehaviour {
 	public GameObject Player;
-	public GameObject Huntable;
+    public string AssetName;
 	public Transform[] spawnPoints;
 	public float spawnTime = 3f;
-	private SpriteRenderer spriteRenderer;
 	public int maxSpawn = 3;
 	public int count=0;
 
-	void Start(){
-		spriteRenderer = GetComponent<SpriteRenderer> ();
-		InvokeRepeating ("Spawn",spawnTime,spawnTime);
+    private SpriteRenderer spriteRenderer;
+    private GameObject SpawnType;
+    void Awake()
+    {
+        string assetPath = "Assets/Prefabs/" + AssetName + ".prefab";
+        SpawnType = GameObject.Instantiate(AssetDatabase.LoadAssetAtPath(assetPath, typeof(GameObject))) as GameObject;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        InvokeRepeating("Spawn", spawnTime, spawnTime);
+    }
+	void Start()
+    {
+
 	}
 	//Update is called every frame
 	void Update () 
@@ -21,16 +30,22 @@ public class Respawn : MonoBehaviour {
 	}
 
 	void Spawn(){
-		int spawnPointIndex = Random.Range(0,spawnPoints.Length);
-		int posicaoAleatoriaX = Random.Range(-100,100);
-		int posicaoAleatoriaY = Random.Range(-100,100);
-		this.transform.position = new Vector3(posicaoAleatoriaX, posicaoAleatoriaY, 0);
-		if(maxSpawn>=count){
-			//spawnPoints [spawnPointIndex].position.x = posicaoAleatoriaX;
-			//spawnPoints [spawnPointIndex].position.y = posicaoAleatoriaY;
-			Instantiate (Huntable,new Vector3(spawnPoints [spawnPointIndex].position.x + posicaoAleatoriaX,spawnPoints [spawnPointIndex].position.y + posicaoAleatoriaY,0),spawnPoints[spawnPointIndex].rotation);
-			count++;
-		}
-	}
+        int spawnPointIndex = Random.Range(0, spawnPoints.Length);
+        Vector3 posicaoAleatoria = Random.insideUnitSphere*100;
+        posicaoAleatoria.z = 0;
+        this.transform.position = posicaoAleatoria;
+        if (maxSpawn >= count)
+        {
+            if (SpawnType != null)
+            {
+                Instantiate(SpawnType,
+                new Vector3(spawnPoints[spawnPointIndex].position.x + posicaoAleatoria.x,
+                spawnPoints[spawnPointIndex].position.y + posicaoAleatoria.y, 0),
+                spawnPoints[spawnPointIndex].rotation);
+                count++;
+            }
+
+        }
+    }
 
 }
