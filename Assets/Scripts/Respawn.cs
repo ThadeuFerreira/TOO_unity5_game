@@ -6,7 +6,8 @@ public class Respawn : MonoBehaviour {
 	public GameObject Player;
     public string AssetName;
 	public Transform[] spawnPoints;
-	public float spawnTime = 3f;
+    public float spawnRadius = 100; //Distance from de center, usualy the player
+    public float spawnTime = 3f;
 	public int maxSpawn = 3;
 	public int count=0;
 
@@ -30,18 +31,22 @@ public class Respawn : MonoBehaviour {
 	}
 
 	void Spawn(){
-        int spawnPointIndex = Random.Range(0, spawnPoints.Length);
-        Vector3 posicaoAleatoria = Random.insideUnitSphere*100;
-        posicaoAleatoria.z = 0;
-        this.transform.position = posicaoAleatoria;
+
         if (maxSpawn >= count)
         {
+            int spawnPointIndex = Random.Range(0, spawnPoints.Length);
+            Vector3 randomPosition = Random.insideUnitSphere * spawnRadius + Player.transform.position;
+            randomPosition.z = 0;
+            this.transform.position = randomPosition;
+
             if (SpawnType != null)
             {
-                Instantiate(SpawnType,
-                new Vector3(spawnPoints[spawnPointIndex].position.x + posicaoAleatoria.x,
-                spawnPoints[spawnPointIndex].position.y + posicaoAleatoria.y, 0),
-                spawnPoints[spawnPointIndex].rotation);
+
+                spawnPoints[spawnPointIndex].position = randomPosition;
+
+
+                Instantiate(SpawnType, randomPosition,
+                            spawnPoints[spawnPointIndex].rotation);
                 count++;
             }
 
