@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEditor;
 
-public class Respawn : MonoBehaviour
+public class FoodRespawn : MonoBehaviour
 {
     public GameObject Player;
     public string AssetName;
@@ -45,7 +45,7 @@ public class Respawn : MonoBehaviour
             if (SpawnType != null)
             {
 
-
+                
 
 
                 Instantiate(SpawnType, randomPosition,
