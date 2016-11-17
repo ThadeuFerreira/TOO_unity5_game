@@ -5,10 +5,10 @@ public class DestroyByContact : MonoBehaviour
 {
     public GameObject gameObj;
 
-    private Respawn resp;
+    private FoodRespawn resp;
     void Start()
     {
-        resp =   FindObjectOfType<Respawn>();
+        resp =   FindObjectOfType<FoodRespawn>();
 
     }
     void OnTriggerEnter(Collider other)
