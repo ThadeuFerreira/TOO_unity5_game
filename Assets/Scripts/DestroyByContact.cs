@@ -13,12 +13,16 @@ public class DestroyByContact : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-         if (other.tag == "Player_Colider")
+         if (other.tag == "Player_Colider" || other.tag == "Player")
         {
             //Destroy(other.gameObject);
             Destroy(gameObject);
             resp.Spawn_count--;
             
+        }
+        else if(other.tag == "Cube")
+        {
+            print("Outra colisão " + other.tag);
         }
         
     }

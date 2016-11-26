@@ -46,5 +46,15 @@ public class FoodMove: MonoBehaviour {
 			follow = false;
 		}
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag != "Player" && other.tag != "Player_Collider" && other.tag != "Food")
+        {
+            print("Outra colisão " + other.tag);
+           // rb.velocity = -rb.velocity*0.9f;
+        }
+
+    }
 }
 
